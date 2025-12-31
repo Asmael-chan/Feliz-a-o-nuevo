@@ -1637,8 +1637,35 @@ window.addEventListener("resize", () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+        let lastTime = 0;
+
+function animateParticles(time) {
+    if (time - lastTime < (isMobile ? 40 : 16)) {
+        requestAnimationFrame(animateParticles);
+        return;
+    }
+    lastTime = time;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+
+    faces.forEach(f => {
+        f.update();
+        f.draw();
+    });
+
+    requestAnimationFrame(animateParticles);
+}
+
+requestAnimationFrame(animateParticles);
+
 </script>
 
 </body>
 
 </html>
+
